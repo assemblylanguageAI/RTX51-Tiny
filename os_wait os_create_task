@@ -1,0 +1,43 @@
+#include<rtx51tny.h>
+char os_wait(
+ unsigned char event_sel, /* events to wait for   
+ unsigned char ticks,     /* timer ticks to wait
+ unsigned int dummy);    /*unused argument
+ Event  Description
+ K_IVL  Wait for the interval specified by ticks,
+ K_SIG  Wait for a signal,
+ K_TMO  Wait for a time-out specified by ticks,
+ 
+ Return Value Description
+ RDY_EVENT The task'ready flag was set by either the os_set_ready or isr_set ready routines.
+ SIG_EVENT A signal was received,
+ TMO_EVENT A time-out has completed or an interval has expired,
+ NOT_OK The value of the event_sel argument is invalid,
+ 
+ 
+ #include<rtx51tny.h>
+ #include<stdio.h>  /.for printf/
+ void tst_os_wait(void)_task_9{
+  while(1)
+  {
+      char event;
+      event= os_wait(K_SIG | K_TMO, 50,0 );
+      
+      switch(event)
+      {
+        default;                /* this never happens*/
+        break;
+        
+        case TMO_EVENT:          /*time-out ;50 tick time-out */
+        break;
+        
+        case SIG_EVENT:             /*signal received*/
+         os_reset_interval (100);   /*must use os_reset inteval () to adjust possbile delay issues */ 
+         break;
+         }
+       }
+    }
+    
+        
+ 
+ 
